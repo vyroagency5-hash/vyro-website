@@ -1,1023 +1,453 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vyro Agency — Egypt 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<style>
-:root{
-  --gold:#C9A14A;--gold-light:#e8c77a;
-  --bg:#0d0d0d;--bg2:#0a0a0a;
-  --surface:rgba(255,255,255,.04);--border:rgba(255,255,255,.08);
-  --text:#fff;--text-muted:rgba(255,255,255,.55);--text-hint:rgba(255,255,255,.3);
-  --header-bg:rgba(0,0,0,.3);--modal-bg:rgba(13,13,13,.97);
-  --shadow:rgba(201,161,74,.14);--ticker-bg:rgba(201,161,74,.06);
-  --footer-bg:#060606;
-}
-[data-theme="light"]{
-  --bg:#f4f1eb;--bg2:#ede9df;
-  --surface:rgba(0,0,0,.04);--border:rgba(0,0,0,.1);
-  --text:#111;--text-muted:rgba(0,0,0,.55);--text-hint:rgba(0,0,0,.3);
-  --header-bg:rgba(244,241,235,.82);--modal-bg:rgba(244,241,235,.98);
-  --shadow:rgba(201,161,74,.18);--ticker-bg:rgba(201,161,74,.08);
-  --footer-bg:#e8e3d8;
-}
-html{scroll-behavior:smooth;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;transition:background .4s,color .4s;}
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vyro Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
+  </head>
+  <body>
 
-/* CURSOR */
-.cursor{position:fixed;width:16px;height:16px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 20px var(--gold);transition:width .2s,height .2s,opacity .2s;}
-.cursor.big{width:38px;height:38px;opacity:.45;}
+    <div class="cursor" id="cursor"></div>
 
-/* HEADER */
-header{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:18px 60px;z-index:1000;backdrop-filter:blur(20px);background:var(--header-bg);border-bottom:1px solid var(--border);transition:background .4s,border-color .4s;}
-.logo{font-size:22px;font-weight:800;color:var(--gold);letter-spacing:3px;}
-nav{display:flex;align-items:center;gap:4px;}
-nav a{padding:6px 14px;color:var(--text);text-decoration:none;font-size:13px;font-weight:500;border-radius:30px;transition:color .3s,background .3s;}
-nav a:hover{color:var(--gold);background:rgba(201,161,74,.08);}
+    <!-- HEADER -->
+    <header>
+      <div class="logo">VYRO</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#partnerships">Partnerships</a>
+        <a href="#story">Story</a>
+        <a href="#work">Work</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+        <button class="theme-btn" id="themeBtn" title="Toggle light / dark">
+          <span class="knob"></span>
+          <span class="ico moon">🌙</span>
+          <span class="ico sun">☀️</span>
+        </button>
+      </nav>
+    </header>
 
-/* THEME TOGGLE */
-.theme-btn{margin-left:12px;width:46px;height:26px;border-radius:30px;background:var(--border);border:1px solid var(--border);cursor:pointer;position:relative;transition:background .3s;display:flex;align-items:center;padding:3px;}
-.theme-btn .knob{width:20px;height:20px;border-radius:50%;background:var(--gold);position:absolute;left:3px;transition:left .3s;}
-[data-theme="light"] .theme-btn .knob{left:23px;}
-.theme-btn .ico{font-size:10px;position:absolute;}
-.theme-btn .ico.moon{right:5px;}
-.theme-btn .ico.sun{left:5px;}
-
-/* HERO */
-.hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:flex-start;padding:0 60px;overflow:hidden;}
-.hero video{position:absolute;width:100%;height:100%;object-fit:cover;}
-.overlay{position:absolute;inset:0;background:linear-gradient(120deg,rgba(0,0,0,.88),rgba(0,0,0,.45),rgba(201,161,74,.15));}
-[data-theme="light"] .overlay{background:linear-gradient(120deg,rgba(0,0,0,.72),rgba(0,0,0,.3),rgba(201,161,74,.1));}
-.hero-text{position:relative;max-width:680px;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;padding:6px 16px;border:1px solid rgba(201,161,74,.35);border-radius:30px;background:rgba(201,161,74,.08);}
-.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pdot 1.8s infinite;}
-@keyframes pdot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.3;transform:scale(.6);}}
-.hero-text h1{font-size:65px;line-height:1.1;color:#fff;}
-.hero span{color:var(--gold);}
-.hero-sub{font-size:16px;color:rgba(255,255,255,.6);margin-top:16px;max-width:480px;line-height:1.75;}
-.btn{display:inline-block;margin-top:24px;padding:14px 30px;background:var(--gold);color:#000;border-radius:40px;text-decoration:none;font-weight:700;border:none;cursor:pointer;font-size:14px;letter-spacing:.5px;transition:transform .25s,box-shadow .25s,background .25s;}
-.btn:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(201,161,74,.42);background:var(--gold-light);}
-.hero-badge-img{position:absolute;right:80px;bottom:70px;width:300px;border-radius:20px;overflow:hidden;border:1px solid rgba(201,161,74,.25);box-shadow:0 30px 80px rgba(0,0,0,.55);}
-.hero-badge-img img{width:100%;display:block;filter:brightness(.82);}
-.hero-badge-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent);padding:24px 18px 16px;font-size:13px;font-weight:600;color:#fff;}
-.hero-badge-caption small{display:block;color:var(--gold);font-size:11px;margin-top:4px;font-weight:400;}
-
-/* TICKER */
-.ticker-wrap{overflow:hidden;padding:26px 0;background:var(--ticker-bg);border-top:1px solid rgba(201,161,74,.12);border-bottom:1px solid rgba(201,161,74,.12);}
-.ticker-track{display:flex;width:max-content;animation:tick 32s linear infinite;}
-.ticker-wrap:hover .ticker-track{animation-play-state:paused;}
-@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.tick-item{display:flex;align-items:center;gap:18px;padding:0 30px;white-space:nowrap;font-size:13px;font-weight:600;letter-spacing:.3px;color:var(--text-muted);}
-.tick-star{color:var(--gold);font-size:10px;}
-
-/* SECTIONS */
-.section{padding:130px 60px;}
-.title{font-size:40px;font-weight:700;margin-bottom:16px;color:var(--text);}
-.title span{color:var(--gold);}
-.subtitle{color:var(--text-muted);font-size:15px;line-height:1.75;margin-bottom:44px;max-width:560px;}
-
-/* SERVICE CARDS */
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;}
-.service-card{background:var(--surface);border-radius:20px;border:1px solid var(--border);overflow:hidden;transition:transform .35s,border-color .35s,box-shadow .35s;cursor:pointer;}
-.service-card:hover{transform:translateY(-10px);border-color:rgba(201,161,74,.5);box-shadow:0 20px 60px var(--shadow);}
-.service-card img{width:100%;height:200px;object-fit:cover;display:block;filter:brightness(.75);transition:filter .4s;}
-.service-card:hover img{filter:brightness(1);}
-.sc-body{padding:24px;}
-.sc-body h3{font-size:17px;font-weight:600;margin-bottom:8px;color:var(--text);}
-.sc-body p{font-size:13px;color:var(--text-muted);line-height:1.65;}
-.svc-tag{display:inline-block;margin-bottom:10px;padding:4px 12px;background:rgba(201,161,74,.12);color:var(--gold);border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;}
-.sc-cta{display:flex;align-items:center;gap:6px;margin-top:16px;font-size:12px;font-weight:700;color:var(--gold);opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s;}
-.service-card:hover .sc-cta{opacity:1;transform:translateY(0);}
-
-/* SERVICE MODAL */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;z-index:8000;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;}
-.modal-bg.open{opacity:1;visibility:visible;}
-.modal-box{background:var(--modal-bg);border:1px solid rgba(201,161,74,.2);border-radius:26px;width:min(640px,93vw);max-height:90vh;overflow-y:auto;position:relative;transform:scale(.86) translateY(30px);transition:transform .4s cubic-bezier(.34,1.56,.64,1);}
-.modal-bg.open .modal-box{transform:scale(1) translateY(0);}
-.m-img{width:100%;height:240px;object-fit:cover;border-radius:26px 26px 0 0;filter:brightness(.8);}
-.m-body{padding:36px 40px 42px;}
-.m-tag{display:inline-block;margin-bottom:12px;padding:4px 14px;background:rgba(201,161,74,.12);color:var(--gold);border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
-.m-body h2{font-size:26px;font-weight:700;margin-bottom:24px;color:var(--text);}
-.m-sec{margin-bottom:26px;}
-.m-sec h4{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.m-sec p{font-size:14px;color:var(--text-muted);line-height:1.8;}
-.m-benefits{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.m-benefits li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);line-height:1.65;}
-.m-benefits li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:8px;}
-.m-process{display:flex;flex-direction:column;gap:16px;}
-.m-step{display:flex;gap:16px;align-items:flex-start;}
-.step-n{width:32px;height:32px;border-radius:50%;background:rgba(201,161,74,.13);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(201,161,74,.28);}
-.step-t strong{display:block;font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
-.step-t span{font-size:13px;color:var(--text-muted);line-height:1.65;}
-.m-cta-btn{width:100%;padding:14px;background:var(--gold);color:#000;border:none;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;margin-top:10px;transition:background .25s,transform .2s;}
-.m-cta-btn:hover{background:var(--gold-light);transform:translateY(-2px);}
-.m-close{position:absolute;top:18px;right:20px;background:rgba(0,0,0,.55);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:10;}
-.m-close:hover{background:rgba(201,161,74,.5);}
-
-/* PARTNERSHIPS */
-#partnerships{padding:120px 60px;background:var(--bg2);transition:background .4s;}
-.p-intro{max-width:620px;margin-bottom:65px;}
-.p-intro p{color:var(--text-muted);font-size:15px;line-height:1.8;margin-top:14px;}
-.p-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;margin-bottom:70px;}
-.p-card{position:relative;border-radius:20px;overflow:hidden;height:310px;border:1px solid var(--border);transition:transform .35s,box-shadow .35s;}
-.p-card:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.5);}
-.p-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.5) saturate(.8);transition:filter .45s,transform .45s;}
-.p-card:hover img{filter:brightness(.65) saturate(1);transform:scale(1.04);}
-.p-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 60%);display:flex;flex-direction:column;justify-content:flex-end;padding:28px;}
-.p-overlay h3{font-size:20px;font-weight:700;margin-bottom:7px;color:#fff;}
-.p-overlay p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;}
-.p-badge{display:inline-block;margin-bottom:12px;padding:4px 11px;background:var(--gold);color:#000;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;}
-.collab-strip{background:rgba(201,161,74,.06);border:1px solid rgba(201,161,74,.15);border-radius:20px;padding:50px 55px;display:flex;align-items:center;justify-content:space-between;gap:36px;flex-wrap:wrap;}
-.collab-strip h3{font-size:27px;font-weight:700;max-width:450px;line-height:1.3;color:var(--text);}
-.collab-strip h3 span{color:var(--gold);}
-
-/* STORY */
-#story{padding:140px 60px;background:var(--bg);transition:background .4s;}
-.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;}
-.s-img{position:relative;border-radius:22px;overflow:hidden;height:470px;}
-.s-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.8) saturate(.9);}
-.s-badge{position:absolute;bottom:26px;left:26px;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);border:1px solid rgba(201,161,74,.35);border-radius:14px;padding:16px 20px;}
-.s-badge span{display:block;font-size:26px;font-weight:700;color:var(--gold);}
-.s-badge small{font-size:11px;color:rgba(255,255,255,.5);}
-.story-copy p{color:var(--text-muted);font-size:15px;line-height:1.9;margin-bottom:17px;}
-
-/* WORK */
-#work{padding:140px 60px;background:var(--bg2);transition:background .4s;}
-.w-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
-.w-item{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--border);transition:transform .35s;}
-.w-item:hover{transform:scale(1.025);}
-.w-item:first-child{grid-column:span 2;}
-.w-item img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.65) saturate(.8);transition:filter .4s,transform .4s;}
-.w-item:hover img{filter:brightness(.88) saturate(1);transform:scale(1.05);}
-.w-label{position:absolute;bottom:20px;left:20px;}
-.w-label h4{font-size:16px;font-weight:700;color:#fff;}
-.w-label p{font-size:12px;color:rgba(255,255,255,.5);margin-top:3px;}
-
-/* TESTIMONIALS */
-#testimonials{padding:120px 60px;background:var(--bg);transition:background .4s;}
-.t-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:48px;}
-.t-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px;transition:border-color .3s,transform .3s;}
-.t-card:hover{border-color:rgba(201,161,74,.35);transform:translateY(-5px);}
-.t-stars{color:var(--gold);margin-bottom:14px;font-size:14px;letter-spacing:2px;}
-.t-text{font-size:14px;line-height:1.8;color:var(--text-muted);margin-bottom:22px;}
-.t-author{display:flex;align-items:center;gap:14px;}
-.t-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid rgba(201,161,74,.3);}
-.t-info strong{display:block;font-size:14px;font-weight:600;color:var(--text);}
-.t-info span{font-size:12px;color:var(--text-hint);}
-
-/* CTA */
-.cta-band{padding:120px 60px;text-align:center;background:linear-gradient(135deg,rgba(201,161,74,.08),transparent);border-top:1px solid rgba(201,161,74,.12);}
-.cta-band h2{font-size:48px;font-weight:700;margin-bottom:16px;color:var(--text);}
-.cta-band p{color:var(--text-muted);font-size:16px;margin-bottom:36px;}
-
-/* CONTACT */
-.footer-contact{padding:100px 60px;background:var(--bg2);text-align:center;border-top:1px solid var(--border);transition:background .4s;}
-.footer-contact h2{color:var(--text);}
-.footer-contact .sub{color:var(--text-muted);margin-top:8px;margin-bottom:28px;font-size:14px;}
-.footer-contact input{width:300px;max-width:90%;padding:12px 16px;margin:8px;border-radius:10px;border:1px solid var(--border);outline:none;background:var(--surface);color:var(--text);font-size:14px;transition:border-color .3s;}
-.footer-contact input:focus{border-color:var(--gold);}
-.footer-contact button{padding:12px 28px;background:var(--gold);border:none;cursor:pointer;font-weight:700;border-radius:10px;font-size:14px;transition:background .25s,transform .2s;}
-.footer-contact button:hover{background:var(--gold-light);transform:translateY(-2px);}
-
-/* FOOTER */
-footer{background:var(--footer-bg);padding:60px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:50px;border-top:1px solid var(--border);transition:background .4s;}
-.f-logo{font-size:28px;font-weight:800;color:var(--gold);margin-bottom:14px;}
-.f-desc{font-size:13px;color:var(--text-muted);line-height:1.8;max-width:300px;}
-footer .f-col h5{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-hint);margin-bottom:18px;}
-footer .f-col a{display:block;font-size:14px;color:var(--text-muted);text-decoration:none;margin-bottom:10px;transition:color .3s;}
-footer .f-col a:hover{color:var(--gold);}
-.f-bottom{background:var(--footer-bg);padding:20px 60px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);font-size:12px;color:var(--text-hint);transition:background .4s;}
-
-/* POPUP */
-.popup{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:9999;}
-.popup-box{background:var(--modal-bg);backdrop-filter:blur(20px);padding:38px;border-radius:22px;width:340px;text-align:center;border:1px solid rgba(201,161,74,.2);}
-.popup-box h3{margin-bottom:22px;color:var(--text);font-size:20px;}
-.popup-box input{width:100%;padding:12px 14px;margin:7px 0;border:1px solid var(--border);border-radius:10px;outline:none;background:var(--surface);color:var(--text);font-size:14px;transition:border-color .3s;}
-.popup-box input:focus{border-color:var(--gold);}
-.popup-box button{width:100%;padding:12px;background:var(--gold);border:none;cursor:pointer;font-weight:700;border-radius:10px;font-size:14px;margin-top:6px;transition:background .25s;}
-.popup-box button:hover{background:var(--gold-light);}
-
-/* SUCCESS */
-.success{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.85);opacity:0;visibility:hidden;z-index:99999;}
-.success-box{background:rgba(255,255,255,.07);padding:50px;border-radius:25px;text-align:center;transform:scale(.6);border:1px solid rgba(201,161,74,.4);}
-.success-box h2{color:var(--gold);}
-.success-box p{color:var(--text-muted);margin-top:12px;font-size:14px;max-width:280px;}
-
-/* ===== OUR CLIENTS ===== */
-#our-clients{padding:120px 60px;background:var(--bg);transition:background .4s;text-align:center;position:relative;overflow:hidden;}
-#our-clients::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,161,74,.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
-.clients-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;padding:6px 16px;border:1px solid rgba(201,161,74,.3);border-radius:30px;background:rgba(201,161,74,.07);}
-.clients-sub{font-size:15px;color:var(--text-muted);max-width:520px;margin:0 auto 70px;line-height:1.75;}
-.clients-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;margin-bottom:70px;}
-.client-card{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:38px 40px 32px;width:280px;display:flex;flex-direction:column;align-items:center;gap:18px;transition:transform .35s,border-color .35s,box-shadow .35s;position:relative;overflow:hidden;}
-.client-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,161,74,.05),transparent);opacity:0;transition:opacity .35s;}
-.client-card:hover{transform:translateY(-10px);border-color:rgba(201,161,74,.45);box-shadow:0 22px 60px rgba(201,161,74,.13);}
-.client-card:hover::after{opacity:1;}
-.client-logo-wrap{width:110px;height:110px;border-radius:22px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.15);flex-shrink:0;transition:transform .3s;}
-.client-card:hover .client-logo-wrap{transform:scale(1.06);}
-.client-logo-wrap img{width:90%;height:90%;object-fit:contain;}
-.client-name{font-size:18px;font-weight:700;color:var(--text);}
-.client-tagline{font-size:12px;color:var(--text-muted);font-style:italic;margin-top:-10px;}
-.client-results{display:flex;flex-direction:column;gap:8px;width:100%;}
-.result-badge{display:flex;align-items:center;gap:10px;background:rgba(201,161,74,.08);border:1px solid rgba(201,161,74,.18);border-radius:10px;padding:10px 14px;width:100%;}
-.result-icon{font-size:15px;flex-shrink:0;}
-.result-text{text-align:left;}
-.result-text strong{display:block;font-size:13px;font-weight:700;color:var(--gold);line-height:1.2;}
-.result-text span{font-size:11px;color:var(--text-muted);}
-.clients-timeline{background:rgba(201,161,74,.06);border:1px solid rgba(201,161,74,.15);border-radius:20px;padding:42px 48px;max-width:860px;margin:0 auto;display:flex;align-items:center;}
-.tl-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;z-index:1;}
-.tl-step:not(:last-child)::after{content:'';position:absolute;right:-50%;top:17px;width:100%;height:1px;background:linear-gradient(90deg,rgba(201,161,74,.5),rgba(201,161,74,.1));}
-.tl-dot{width:34px;height:34px;border-radius:50%;background:rgba(201,161,74,.15);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--gold);margin-bottom:11px;flex-shrink:0;}
-.tl-dot.active{background:var(--gold);color:#000;box-shadow:0 0 16px rgba(201,161,74,.45);}
-.tl-label{font-size:12px;font-weight:600;color:var(--text);text-align:center;line-height:1.4;}
-.tl-label small{display:block;font-size:10px;color:var(--text-muted);margin-top:3px;font-weight:400;}
-.clients-headline{margin-top:55px;}
-.clients-headline h3{font-size:28px;font-weight:700;color:var(--text);margin-bottom:10px;}
-.clients-headline h3 span{color:var(--gold);}
-.clients-headline p{font-size:14px;color:var(--text-muted);max-width:440px;margin:0 auto;line-height:1.7;}
-@media(max-width:700px){#our-clients{padding:80px 18px;}.client-card{width:100%;max-width:340px;}.clients-timeline{flex-direction:column;gap:22px;padding:28px 20px;}.tl-step:not(:last-child)::after{display:none;}.clients-headline h3{font-size:22px;}}
-
-/* HERO TEAM STACK */
-.hero-team-stack{position:relative;height:260px;width:100%;overflow:hidden;}
-.stack-img{position:absolute;bottom:0;object-fit:cover;object-position:top;border-radius:0;width:55%;height:100%;transition:filter .4s;}
-.stack-1{left:50%;transform:translateX(-50%);z-index:3;filter:brightness(.9);}
-.stack-2{left:5%;z-index:2;filter:brightness(.6);width:45%;}
-.stack-3{right:5%;z-index:2;filter:brightness(.6);width:45%;}
-.hero-badge-img:hover .stack-2,.hero-badge-img:hover .stack-3{filter:brightness(.75);}
-
-/* TEAM MODAL */
-.team-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9000;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;padding:20px;}
-.team-modal-bg.open{opacity:1;visibility:visible;}
-.team-modal-box{background:var(--modal-bg);border:1px solid rgba(201,161,74,.2);border-radius:28px;width:min(900px,95vw);max-height:92vh;overflow-y:auto;padding:50px 55px 55px;position:relative;transform:scale(.88) translateY(30px);transition:transform .45s cubic-bezier(.34,1.56,.64,1);}
-.team-modal-bg.open .team-modal-box{transform:scale(1) translateY(0);}
-.team-modal-close{position:absolute;top:20px;right:24px;background:rgba(255,255,255,.07);border:none;color:var(--text);width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;}
-.team-modal-close:hover{background:rgba(201,161,74,.3);}
-.team-modal-header{text-align:center;margin-bottom:50px;}
-.team-modal-header .tm-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:5px 14px;border:1px solid rgba(201,161,74,.3);border-radius:30px;background:rgba(201,161,74,.07);margin-bottom:14px;}
-.team-modal-header h2{font-size:34px;font-weight:700;color:var(--text);margin-bottom:10px;}
-.team-modal-header h2 span{color:var(--gold);}
-.team-modal-header p{color:var(--text-muted);font-size:15px;max-width:460px;margin:0 auto;line-height:1.7;}
-.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
-.team-member{background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden;transition:transform .35s,border-color .35s,box-shadow .35s;text-align:center;}
-.team-member:hover{transform:translateY(-10px);border-color:rgba(201,161,74,.45);box-shadow:0 24px 60px rgba(201,161,74,.12);}
-.tm-img-wrap{height:280px;overflow:hidden;position:relative;background:linear-gradient(180deg,rgba(201,161,74,.04),rgba(0,0,0,.1));}
-.tm-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;filter:brightness(.88) saturate(.9);transition:filter .4s,transform .4s;}
-.team-member:hover .tm-img-wrap img{filter:brightness(1) saturate(1);transform:scale(1.04);}
-.tm-badge{position:absolute;top:14px;right:14px;background:var(--gold);color:#000;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:6px;}
-.tm-body{padding:22px 22px 26px;}
-.tm-name{font-size:18px;font-weight:700;color:var(--text);margin-bottom:3px;}
-.tm-role{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
-.tm-divider{width:36px;height:2px;background:var(--gold);border-radius:2px;margin:0 auto 14px;opacity:.4;}
-.tm-desc{font-size:13px;color:var(--text-muted);line-height:1.75;}
-.tm-skills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px;}
-.tm-skill{font-size:10px;font-weight:600;padding:4px 10px;background:rgba(201,161,74,.1);color:var(--gold);border-radius:20px;letter-spacing:.5px;}
-/* ===== TEAM SECTION ===== */
-#team{padding:0;background:var(--bg2);transition:background .4s;position:relative;overflow:hidden;}
-.team-hero-wrap{position:relative;height:70vh;min-height:500px;cursor:pointer;overflow:hidden;}
-.team-hero-wrap img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.45) saturate(.7);transition:filter .6s,transform .6s;}
-.team-hero-wrap:hover img{filter:brightness(.55) saturate(.85);transform:scale(1.03);}
-.team-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,.75) 100%);}
-.team-hero-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;}
-.team-section-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);padding:6px 16px;border:1px solid rgba(201,161,74,.35);border-radius:30px;background:rgba(201,161,74,.08);margin-bottom:20px;}
-.team-hero-content h2{font-size:52px;font-weight:800;color:#fff;margin-bottom:14px;line-height:1.1;}
-.team-hero-content h2 span{color:var(--gold);}
-.team-hero-content p{font-size:16px;color:rgba(255,255,255,.65);max-width:480px;line-height:1.75;margin-bottom:32px;}
-.team-click-hint{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#fff;padding:12px 26px;border:2px solid rgba(255,255,255,.3);border-radius:40px;background:rgba(255,255,255,.06);backdrop-filter:blur(8px);transition:border-color .3s,background .3s,transform .3s;}
-.team-hero-wrap:hover .team-click-hint{border-color:var(--gold);background:rgba(201,161,74,.12);transform:translateY(-3px);}
-.team-click-hint .hint-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pdot 1.5s infinite;}
-/* member previews strip at bottom */
-.team-preview-strip{display:flex;justify-content:center;gap:16px;position:absolute;bottom:36px;left:50%;transform:translateX(-50%);}
-.preview-avatar{width:58px;height:58px;border-radius:50%;overflow:hidden;border:2px solid rgba(201,161,74,.5);box-shadow:0 4px 20px rgba(0,0,0,.4);transition:transform .3s,border-color .3s;}
-.team-hero-wrap:hover .preview-avatar{border-color:var(--gold);}
-.preview-avatar:nth-child(1){transform:translateY(0) rotate(-4deg);}
-.preview-avatar:nth-child(2){transform:translateY(-8px);}
-.preview-avatar:nth-child(3){transform:translateY(0) rotate(4deg);}
-.team-hero-wrap:hover .preview-avatar:nth-child(1){transform:translateY(-4px) rotate(-4deg);}
-.team-hero-wrap:hover .preview-avatar:nth-child(2){transform:translateY(-14px);}
-.team-hero-wrap:hover .preview-avatar:nth-child(3){transform:translateY(-4px) rotate(4deg);}
-.preview-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;}
-
-/* REVEAL */
-.reveal{opacity:0;transform:translateY(44px);}
-.rev-left{opacity:0;transform:translateX(-55px);}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .story-grid{grid-template-columns:1fr;}
-  .w-grid{grid-template-columns:1fr 1fr;}
-  .w-item:first-child{grid-column:span 1;}
-  footer{grid-template-columns:1fr;}
-  .collab-strip{flex-direction:column;text-align:center;}
-  .hero-badge-img{display:none;}
-}
-@media(max-width:600px){
-  header{padding:14px 18px;}
-  nav a{padding:4px 8px;font-size:11px;}
-  .section,#partnerships,#story,#work,#testimonials,.cta-band,.footer-contact,footer,.f-bottom{padding-left:18px;padding-right:18px;}
-  .hero{padding:0 18px;}
-  .hero-text h1{font-size:34px;}
-  .w-grid{grid-template-columns:1fr;}
-  .collab-strip{padding:28px 18px;}
-  .m-body{padding:24px 22px 30px;}
-}
-</style>
-</head>
-<body>
-
-<div class="cursor" id="cursor"></div>
-
-<!-- HEADER -->
-<header>
-  <div class="logo">VYRO</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#services">Services</a>
-    <a href="#partnerships">Partnerships</a>
-    <a href="#story">Story</a>
-    <a href="#work">Work</a>
-    <a href="#team">Team</a>
-    <a href="#contact">Contact</a>
-    <button class="theme-btn" id="themeBtn" title="Toggle light / dark">
-      <span class="knob"></span>
-      <span class="ico moon">🌙</span>
-      <span class="ico sun">☀️</span>
-    </button>
-  </nav>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <video autoplay muted loop playsinline><source src="images/hero.mp4" type="video/mp4"></video>
-  <div class="overlay"></div>
-  <div class="hero-text">
-    <div class="hero-eyebrow"><span class="pulse-dot"></span> Egypt · Est. 2026</div>
-    <h1>We Build <span>Brands<br>That Dominate</span></h1>
-    <p class="hero-sub">Egypt's premier brand-growth agency — strategy, campaigns, and partnerships built for the world stage.</p>
-    <button class="btn" onclick="openPopup()">Start Your Journey</button>
-  </div>
-    </div>
-    <div class="hero-badge-caption">
-      Meet The Vyro Team
-      <small>Egypt · Est. 2026 ·<a href="#team">Click to explore →</a>
-    </div>
-  </div>
-</section>
-
-<!-- MOTIVATIONAL TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <div class="tick-item"><span class="tick-star">★</span> Your Brand Deserves to Be Remembered — Let's Make It Happen</div>
-    <div class="tick-item"><span class="tick-star">★</span> One Call Can Change Everything — Reach Out Today</div>
-    <div class="tick-item"><span class="tick-star">★</span> Stop Blending In. Start Dominating Your Market</div>
-    <div class="tick-item"><span class="tick-star">★</span> The Best Brands Don't Wait — They Move First</div>
-    <div class="tick-item"><span class="tick-star">★</span> We Turn Ambition Into Market Dominance</div>
-    <div class="tick-item"><span class="tick-star">★</span> Your Competitors Won't Wait — Neither Should You</div>
-    <div class="tick-item"><span class="tick-star">★</span> Great Brands Are Built, Not Born — Let's Build Yours</div>
-    <!-- duplicate -->
-    <div class="tick-item"><span class="tick-star">★</span> Your Brand Deserves to Be Remembered — Let's Make It Happen</div>
-    <div class="tick-item"><span class="tick-star">★</span> One Call Can Change Everything — Reach Out Today</div>
-    <div class="tick-item"><span class="tick-star">★</span> Stop Blending In. Start Dominating Your Market</div>
-    <div class="tick-item"><span class="tick-star">★</span> The Best Brands Don't Wait — They Move First</div>
-    <div class="tick-item"><span class="tick-star">★</span> We Turn Ambition Into Market Dominance</div>
-    <div class="tick-item"><span class="tick-star">★</span> Your Competitors Won't Wait — Neither Should You</div>
-    <div class="tick-item"><span class="tick-star">★</span> Great Brands Are Built, Not Born — Let's Build Yours</div>
-  </div>
-</div>
-
-<!-- SERVICES -->
-<section class="section" id="services" style="background:var(--bg);transition:background .4s;">
-  <h2 class="title reveal">Our <span>Services</span></h2>
-  <p class="subtitle reveal">Click any service card to discover our process, the benefits you gain, and exactly how we deliver results.</p>
-  <div class="services-grid">
-
-    <div class="service-card reveal" onclick="openModal('brand')">
-      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Brand Positioning">
-      <div class="sc-body">
-        <span class="svc-tag">Strategy</span>
-        <h3>Brand Positioning</h3>
-        <p>We craft a magnetic identity that cuts through noise and plants your brand firmly in the minds of your audience.</p>
-        <div class="sc-cta">Explore Service →</div>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="overlay"></div>
+      <div class="hero-text">
+        <div class="hero-eyebrow"><span class="pulse-dot"></span> Egypt · Est. 2026</div>
+        <h1>We Build <span>Brands<br>That Dominate</span></h1>
+        <p class="hero-sub">Egypt's premier brand-growth agency — strategy, campaigns, and partnerships built for the world stage.</p>
+        <button class="btn" onclick="openPopup()">Start Your Journey</button>
       </div>
-    </div>
-
-    <div class="service-card reveal" onclick="openModal('bizdev')">
-      <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80" alt="Business Development">
-      <div class="sc-body">
-        <span class="svc-tag">Growth</span>
-        <h3>Business Development</h3>
-        <p>Unlock new revenue streams, strategic alliances, and scalable growth frameworks built for the long game.</p>
-        <div class="sc-cta">Explore Service →</div>
-      </div>
-    </div>
-
-    <div class="service-card reveal" onclick="openModal('campaigns')">
-      <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80" alt="Campaigns">
-      <div class="sc-body">
-        <span class="svc-tag">Marketing</span>
-        <h3>Campaigns</h3>
-        <p>Data-driven, story-powered campaigns that generate leads, loyalty, and lasting cultural moments.</p>
-        <div class="sc-cta">Explore Service →</div>
-      </div>
-    </div>
-
-    <div class="service-card reveal" onclick="openModal('events')">
-      <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=600&q=80" alt="Events">
-      <div class="sc-body">
-        <span class="svc-tag">Experience</span>
-        <h3>Events</h3>
-        <p>From intimate investor dinners to large-scale brand activations — experiences people talk about for years.</p>
-        <div class="sc-cta">Explore Service →</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- PARTNERSHIPS -->
-<section id="partnerships">
-  <div class="p-intro reveal">
-    <h2 class="title">Partnerships &amp; <span>Collaboration</span></h2>
-    <p>We bridge ambitious Egyptian and regional companies with the right partners, co-creators, and ecosystems to multiply impact — not just add to it.</p>
-  </div>
-  <div class="p-grid">
-    <div class="p-card reveal">
-      <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80" alt="Strategic Alliances" loading="lazy">
-      <div class="p-overlay"><span class="p-badge">Strategic</span><h3>Strategic Alliances</h3><p>High-value partnerships that align vision, values, and velocity.</p></div>
-    </div>
-    <div class="p-card reveal">
-      <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" alt="Co-Branding" loading="lazy">
-      <div class="p-overlay"><span class="p-badge">Creative</span><h3>Co-Branding Projects</h3><p>Joint campaigns and shared storytelling that amplify both brands.</p></div>
-    </div>
-    <div class="p-card reveal">
-      <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80" alt="Investor Relations" loading="lazy">
-      <div class="p-overlay"><span class="p-badge">Finance</span><h3>Investor Relations</h3><p>Connect with the right investors and craft narratives that close deals.</p></div>
-    </div>
-    <div class="p-card reveal">
-      <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80" alt="Ecosystem Building" loading="lazy">
-      <div class="p-overlay"><span class="p-badge">Community</span><h3>Ecosystem Building</h3><p>Communities and networks that become unfair competitive advantages.</p></div>
-    </div>
-  </div>
-  <div class="collab-strip reveal">
-    <h3>Ready to build something <span>bigger together?</span></h3>
-    <button class="btn" onclick="openPopup()">Start a Collaboration</button>
-  </div>
-  <!-- Partner names ticker -->
-  <div class="ticker-wrap" style="margin-top:55px;">
-    <div class="ticker-track">
-      <div class="tick-item"><span class="tick-star">★</span> Forbes Partner</div>
-      <div class="tick-item"><span class="tick-star">·</span> Google for Startups</div>
-      <div class="tick-item"><span class="tick-star">·</span> Techstars Alumni</div>
-      <div class="tick-item"><span class="tick-star">·</span> Y Combinator Network</div>
-      <div class="tick-item"><span class="tick-star">·</span> Flat6Labs Cairo</div>
-      <div class="tick-item"><span class="tick-star">·</span> Egypt Ventures</div>
-      <div class="tick-item"><span class="tick-star">·</span> 500 Startups</div>
-      <div class="tick-item"><span class="tick-star">·</span> WEF Global Shaper</div>
-      <div class="tick-item"><span class="tick-star">★</span> Forbes Partner</div>
-      <div class="tick-item"><span class="tick-star">·</span> Google for Startups</div>
-      <div class="tick-item"><span class="tick-star">·</span> Techstars Alumni</div>
-      <div class="tick-item"><span class="tick-star">·</span> Y Combinator Network</div>
-      <div class="tick-item"><span class="tick-star">·</span> Flat6Labs Cairo</div>
-      <div class="tick-item"><span class="tick-star">·</span> Egypt Ventures</div>
-      <div class="tick-item"><span class="tick-star">·</span> 500 Startups</div>
-      <div class="tick-item"><span class="tick-star">·</span> WEF Global Shaper</div>
-    </div>
-  </div>
-</section>
-
-<!-- STORY -->
-<section id="story">
-  <div class="story-grid">
-    <div class="s-img rev-left">
-      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Our Story" loading="lazy">
-      <div class="s-badge"><span>Vyro</span><small>Egypt · Est. 2026</small></div>
-    </div>
-    <div class="story-copy">
-      <h2 class="title reveal">Our <span>Story</span></h2>
-      <div class="story-copy">
-        <p class="reveal">Vyro was born from a simple frustration: too many great Egyptian brands were being buried by mediocre strategy. We set out to change that — building an agency operating at the intersection of bold creativity and ruthless execution.</p>
-        <p class="reveal">From a three-person team working out of a small office in Egypt, we've grown into a full-service agency trusted by founders, executives, and challenger brands across the region and beyond.</p>
-        <p class="reveal">We don't just manage brands. We engineer dominance — from Egypt to the world.</p>
-      </div>
-      <div style="margin-top:32px;" class="reveal">
-        <button class="btn" onclick="openPopup()">Work With Us</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WORK -->
-<section id="work">
-  <h2 class="title reveal">Our <span>Work</span></h2>
-  <div class="w-grid">
-    <div class="w-item reveal">
-      <img src="https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=1000&q=80" alt="Luxe Brand Launch" loading="lazy">
-      <div class="w-label"><h4>Luxe Brand Launch</h4><p>Brand Positioning · Campaign</p></div>
-    </div>
-    <div class="w-item reveal">
-      <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="FinTech Growth" loading="lazy">
-      <div class="w-label"><h4>FinTech Growth Sprint</h4><p>Business Dev · Partnerships</p></div>
-    </div>
-    <div class="w-item reveal">
-      <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Summit Event" loading="lazy">
-      <div class="w-label"><h4>Leaders Summit 2025</h4><p>Events · Experience</p></div>
-    </div>
-    <div class="w-item reveal">
-      <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Social Campaign" loading="lazy">
-      <div class="w-label"><h4>Viral Social Campaign</h4><p>Campaign · Content</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <h2 class="title reveal">What Clients <span>Say</span></h2>
-  <div class="t-grid">
-      </div>
-    </div>
-    <div class="t-card reveal">
-      <div class="t-stars">★★★★★</div>
-      <p class="t-text">"The partnerships they facilitated opened three completely new markets for us. These people are genuinely connected at the highest level."</p>
-      <div class="t-author">
-        <img class="t-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80" alt="Sara M.">
-        <div class="t-info"><strong>Sara Mansour</strong><span>COO, Bloom Ventures</span></div>
-      </div>
-    </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- OUR CLIENTS -->
-<section id="our-clients">
-  <div class="clients-eyebrow reveal">🏆 Trusted By</div>
-  <h2 class="title reveal">Our <span>Clients</span></h2>
-  <p class="clients-sub reveal">We don't just take on clients — we take on their goals. Here's who trusted Vyro to build, grow, and dominate their market.</p>
-
-  <div class="clients-grid">
-    <div class="client-card reveal">
-      <div class="client-logo-wrap">
-        <img src="images/qurbly-logo.png" alt="Qurbly">
-      </div>
-      <div class="client-name">Qurbly</div>
-      <div class="client-tagline">"معاك في كل مكان"</div>
-      <div class="client-results">
-        <div class="result-badge"><span class="result-icon">🚀</span><div class="result-text"><strong>Massive Growth</strong><span>Brand awareness & reach</span></div></div>
-        <div class="result-badge"><span class="result-icon">📣</span><div class="result-text"><strong>Campaign Launched</strong><span>Multi-channel execution</span></div></div>
-        <div class="result-badge"><span class="result-icon">⚡</span><div class="result-text"><strong>5 Weeks Only</strong><span>From zero to results</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="clients-timeline reveal">
-    <div class="tl-step"><div class="tl-dot active">1</div><div class="tl-label">Discovery<small>Week 1</small></div></div>
-    <div class="tl-step"><div class="tl-dot active">2</div><div class="tl-label">Strategy<small>Week 2</small></div></div>
-    <div class="tl-step"><div class="tl-dot active">3</div><div class="tl-label">Execution<small>Week 3</small></div></div>
-    <div class="tl-step"><div class="tl-dot active">4</div><div class="tl-label">Optimization<small>Week 4</small></div></div>
-    <div class="tl-step"><div class="tl-dot active">5</div><div class="tl-label">Big Results<small>Week 5 ✓</small></div></div>
-  </div>
-
-  <div class="clients-headline reveal">
-    <h3>We Achieved <span>Big Results</span> in Just 5 Weeks</h3>
-    <p>Speed is our competitive advantage. We move fast, execute with precision, and deliver outcomes that matter — before most agencies finish their first presentation.</p>
-  </div>
-</section>
-
-<!-- TEAM SECTION -->
-<section id="team">
-  <div class="team-hero-wrap reveal" onclick="openTeamModal()">
-    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=85" alt="Vyro Team">
-    <div class="team-hero-overlay"></div>
-    <div class="team-hero-content">
-      <div class="team-section-eyebrow"><span class="hint-dot"></span> The People Behind The Brand</div>
-      <h2>Meet <span>Our Team</span></h2>
-      <p>Three driven leaders united by one mission — to build brands that dominate markets and change industries across Egypt and beyond.</p>
-      <div class="team-click-hint">
-        <span class="hint-dot"></span> Click to Meet the Team
-      </div>
-      <!-- avatar preview strip -->
-      <div class="team-preview-strip">
-        <div class="preview-avatar"><img src="team-mustafa-m.png" alt="CEO"></div>
-        <div class="preview-avatar"><img src="team-shahd.png"     alt="COO"></div>
-        <div class="preview-avatar"><img src="team-mustafa-h.jpeg" alt="CFO"></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-band">
-  <h2 class="reveal">Ready to <span style="color:var(--gold);">Dominate?</span></h2>
-  <p class="reveal">Let's build your brand's next chapter — from Egypt to the world.</p>
-  <button class="btn reveal" onclick="openPopup()">Get Started Today</button>
-</section>
-
-<!-- CONTACT -->
-<section class="footer-contact" id="contact">
-  <h2>Contact Vyro</h2>
-  <p class="sub">Based in Cairo, Egypt · 2026 · Ready to build with you</p>
-  <input type="text" id="footer-name" placeholder="Your Name">
-  <input type="email" id="footer-email" placeholder="Your Email">
-  <br>
-  <button onclick="sendFooterMail()">Send Message</button>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div>
-    <div class="f-logo">VYRO</div>
-    <p class="f-desc">Egypt's premier brand-growth agency — strategy, campaigns, events, and partnerships built for the world stage.</p>
-  </div>
-  <div class="f-col">
-    <h5>Services</h5>
-    <a href="#services">Brand Positioning</a>
-    <a href="#services">Business Development</a>
-    <a href="#services">Campaigns</a>
-    <a href="#services">Events</a>
-    <a href="#partnerships">Partnerships</a>
-  </div>
-  <div class="f-col">
-    <h5>Company</h5>
-    <a href="#story">Our Story</a>
-    <a href="#work">Work</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#contact">Contact</a>
-  </div>
-</footer>
-<div class="f-bottom">
-  <span>© 2026 Vyro Agency —  Egypt. All rights reserved.</span>
-  <span>egypt</span>
-</div>
-
-<!-- POPUP -->
-<div class="popup" id="popup">
-  <div class="popup-box">
-    <h3>Let's Talk</h3>
-    <input type="text" id="name" placeholder="Your Name">
-    <input type="email" id="email" placeholder="Your Email">
-    <button onclick="submitForm()">Send Message</button>
-  </div>
-</div>
-
-<!-- SUCCESS -->
-<div class="success" id="success">
-  <div class="success-box">
-    <h2>Thank You!</h2>
-    <p id="success-text"></p>
-  </div>
-</div>
-
-<!-- SERVICE MODAL -->
-<div class="modal-bg" id="svcModal" onclick="handleModalBg(event)">
-  <div class="modal-box" id="modalBox">
-    <button class="m-close" onclick="closeModal()">✕</button>
-    <img class="m-img" id="mImg" src="" alt="">
-    <div class="m-body">
-      <span class="m-tag" id="mTag"></span>
-      <h2 id="mTitle"></h2>
-      <div class="m-sec"><h4>What It Is</h4><p id="mDesc"></p></div>
-      <div class="m-sec"><h4>Benefits You Get</h4><ul class="m-benefits" id="mBenefits"></ul></div>
-      <div class="m-sec"><h4>How We Work</h4><div class="m-process" id="mProcess"></div></div>
-      <button class="m-cta-btn" onclick="closeModal();openPopup();">Start This Service →</button>
-    </div>
-  </div>
-</div>
-
-<!-- TEAM MODAL -->
-<div class="team-modal-bg" id="teamModal" onclick="handleTeamBg(event)">
-  <div class="team-modal-box" id="teamModalBox">
-    <button class="team-modal-close" onclick="closeTeamModal()">✕</button>
-
-    <div class="team-modal-header">
-      <div class="tm-eyebrow">⚡ The People Behind Vyro</div>
-      <h2>Meet <span>Our Team</span></h2>
-      <p>Three driven individuals united by one mission — to build brands that dominate markets and change industries.</p>
-    </div>
-
-    <div class="team-grid">
-
-      <!-- CEO: Mustafa Mohamed -->
-      <div class="team-member" id="tm-ceo">
-        <div class="tm-img-wrap">
-          <img src="images/team-mustafa-m.png" alt="Mustafa Mohamed — CEO">
-          <div class="tm-badge">CEO</div>
         </div>
-        <div class="tm-body">
-          <div class="tm-name">Mustafa Mohamed</div>
-          <div class="tm-role">Chief Executive Officer</div>
-          <div class="tm-divider"></div>
-          <p class="tm-desc">The visionary force behind Vyro. Mustafa leads the agency's overall direction, client strategy, and growth architecture. With a sharp eye for market opportunity and a relentless drive for results, he transforms ambitious ideas into executed realities — building brands that don't just compete, they dominate.</p>
-          <div class="tm-skills">
-            <span class="tm-skill">Brand Strategy</span>
-            <span class="tm-skill">Growth Architecture</span>
-            <span class="tm-skill">Leadership</span>
-            <span class="tm-skill">Market Expansion</span>
+        <div class="hero-badge-caption">
+          Meet The Vyro Team
+          <small>Egypt · Est. 2026 · your amazing brand journey starts here →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOTIVATIONAL TICKER -->
+    <div class="ticker-wrap">
+      <div class="ticker-track">
+        <div class="tick-item"><span class="tick-star">★</span> Your Brand Deserves to Be Remembered — Let's Make It Happen</div>
+        <div class="tick-item"><span class="tick-star">★</span> One Call Can Change Everything — Reach Out Today</div>
+        <div class="tick-item"><span class="tick-star">★</span> Stop Blending In. Start Dominating Your Market</div>
+        <div class="tick-item"><span class="tick-star">★</span> The Best Brands Don't Wait — They Move First</div>
+        <div class="tick-item"><span class="tick-star">★</span> We Turn Ambition Into Market Dominance</div>
+        <div class="tick-item"><span class="tick-star">★</span> Your Competitors Won't Wait — Neither Should You</div>
+        <div class="tick-item"><span class="tick-star">★</span> Great Brands Are Built, Not Born — Let's Build Yours</div>
+        <!-- duplicate -->
+        <div class="tick-item"><span class="tick-star">★</span> Your Brand Deserves to Be Remembered — Let's Make It Happen</div>
+        <div class="tick-item"><span class="tick-star">★</span> One Call Can Change Everything — Reach Out Today</div>
+        <div class="tick-item"><span class="tick-star">★</span> Stop Blending In. Start Dominating Your Market</div>
+        <div class="tick-item"><span class="tick-star">★</span> The Best Brands Don't Wait — They Move First</div>
+        <div class="tick-item"><span class="tick-star">★</span> We Turn Ambition Into Market Dominance</div>
+        <div class="tick-item"><span class="tick-star">★</span> Your Competitors Won't Wait — Neither Should You</div>
+        <div class="tick-item"><span class="tick-star">★</span> Great Brands Are Built, Not Born — Let's Build Yours</div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section class="section" id="services" style="background:var(--bg);transition:background .4s;">
+      <h2 class="title reveal">Our <span>Services</span></h2>
+      <p class="subtitle reveal">Click any service card to discover our process, the benefits you gain, and exactly how we deliver results.</p>
+      <div class="services-grid">
+
+        <div class="service-card reveal" onclick="openModal('brand')">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" alt="Brand Positioning">
+          <div class="sc-body">
+            <span class="svc-tag">Strategy</span>
+            <h3>Brand Positioning</h3>
+            <p>We craft a magnetic identity that cuts through noise and plants your brand firmly in the minds of your audience.</p>
+            <div class="sc-cta">Explore Service →</div>
+          </div>
+        </div>
+
+        <div class="service-card reveal" onclick="openModal('bizdev')">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80" alt="Business Development">
+          <div class="sc-body">
+            <span class="svc-tag">Growth</span>
+            <h3>Business Development</h3>
+            <p>Unlock new revenue streams, strategic alliances, and scalable growth frameworks built for the long game.</p>
+            <div class="sc-cta">Explore Service →</div>
+          </div>
+        </div>
+
+        <div class="service-card reveal" onclick="openModal('campaigns')">
+          <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=600&q=80" alt="Campaigns">
+          <div class="sc-body">
+            <span class="svc-tag">Marketing</span>
+            <h3>Campaigns</h3>
+            <p>Data-driven, story-powered campaigns that generate leads, loyalty, and lasting cultural moments.</p>
+            <div class="sc-cta">Explore Service →</div>
+          </div>
+        </div>
+
+        <div class="service-card reveal" onclick="openModal('events')">
+          <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=600&q=80" alt="Events">
+          <div class="sc-body">
+            <span class="svc-tag">Experience</span>
+            <h3>Events</h3>
+            <p>From intimate investor dinners to large-scale brand activations — experiences people talk about for years.</p>
+            <div class="sc-cta">Explore Service →</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PARTNERSHIPS -->
+    <section id="partnerships">
+      <div class="p-intro reveal">
+        <h2 class="title">Partnerships &amp; <span>Collaboration</span></h2>
+        <p>We bridge ambitious Egyptian and regional companies with the right partners, co-creators, and ecosystems to multiply impact — not just add to it.</p>
+      </div>
+      <div class="p-grid">
+        <div class="p-card reveal">
+          <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80" alt="Strategic Alliances" loading="lazy">
+          <div class="p-overlay"><span class="p-badge">Strategic</span><h3>Strategic Alliances</h3><p>High-value partnerships that align vision, values, and velocity.</p></div>
+        </div>
+        <div class="p-card reveal">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80" alt="Co-Branding" loading="lazy">
+          <div class="p-overlay"><span class="p-badge">Creative</span><h3>Co-Branding Projects</h3><p>Joint campaigns and shared storytelling that amplify both brands.</p></div>
+        </div>
+        <div class="p-card reveal">
+          <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80" alt="Investor Relations" loading="lazy">
+          <div class="p-overlay"><span class="p-badge">Finance</span><h3>Investor Relations</h3><p>Connect with the right investors and craft narratives that close deals.</p></div>
+        </div>
+        <div class="p-card reveal">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80" alt="Ecosystem Building" loading="lazy">
+          <div class="p-overlay"><span class="p-badge">Community</span><h3>Ecosystem Building</h3><p>Communities and networks that become unfair competitive advantages.</p></div>
+        </div>
+      </div>
+      <div class="collab-strip reveal">
+        <h3>Ready to build something <span>bigger together?</span></h3>
+        <button class="btn" onclick="openPopup()">Start a Collaboration</button>
+      </div>
+      <!-- Partner names ticker -->
+      <div class="ticker-wrap" style="margin-top:55px;">
+        <div class="ticker-track">
+          <div class="tick-item"><span class="tick-star">★</span> Forbes Partner</div>
+          <div class="tick-item"><span class="tick-star">·</span> Google for Startups</div>
+          <div class="tick-item"><span class="tick-star">·</span> Techstars Alumni</div>
+          <div class="tick-item"><span class="tick-star">·</span> Y Combinator Network</div>
+          <div class="tick-item"><span class="tick-star">·</span> Flat6Labs Cairo</div>
+          <div class="tick-item"><span class="tick-star">·</span> Egypt Ventures</div>
+          <div class="tick-item"><span class="tick-star">·</span> 500 Startups</div>
+          <div class="tick-item"><span class="tick-star">·</span> WEF Global Shaper</div>
+          <div class="tick-item"><span class="tick-star">★</span> Forbes Partner</div>
+          <div class="tick-item"><span class="tick-star">·</span> Google for Startups</div>
+          <div class="tick-item"><span class="tick-star">·</span> Techstars Alumni</div>
+          <div class="tick-item"><span class="tick-star">·</span> Y Combinator Network</div>
+          <div class="tick-item"><span class="tick-star">·</span> Flat6Labs Cairo</div>
+          <div class="tick-item"><span class="tick-star">·</span> Egypt Ventures</div>
+          <div class="tick-item"><span class="tick-star">·</span> 500 Startups</div>
+          <div class="tick-item"><span class="tick-star">·</span> WEF Global Shaper</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story">
+      <div class="story-grid">
+        <div class="s-img rev-left">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=80" alt="Our Story" loading="lazy">
+          <div class="s-badge"><span>Vyro</span><small>Egypt · Est. 2026</small></div>
+        </div>
+        <div class="story-copy">
+          <h2 class="title reveal">Our <span>Story</span></h2>
+          <div class="story-copy">
+            <p class="reveal">Vyro was born from a simple frustration: too many great Egyptian brands were being buried by mediocre strategy. We set out to change that — building an agency operating at the intersection of bold creativity and ruthless execution.</p>
+            <p class="reveal">From a three-person team working out of a small office in Egypt, we've grown into a full-service agency trusted by founders, executives, and challenger brands across the region and beyond.</p>
+            <p class="reveal">We don't just manage brands. We engineer dominance — from Egypt to the world.</p>
+          </div>
+          <div style="margin-top:32px;" class="reveal">
+            <button class="btn" onclick="openPopup()">Work With Us</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work">
+      <h2 class="title reveal">Our <span>Work</span></h2>
+      <div class="w-grid">
+        <div class="w-item reveal">
+          <img src="https://images.unsplash.com/photo-1493421419110-74f4e85ba126?w=1000&q=80" alt="Luxe Brand Launch" loading="lazy">
+          <div class="w-label"><h4>Luxe Brand Launch</h4><p>Brand Positioning · Campaign</p></div>
+        </div>
+        <div class="w-item reveal">
+          <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="FinTech Growth" loading="lazy">
+          <div class="w-label"><h4>FinTech Growth Sprint</h4><p>Business Dev · Partnerships</p></div>
+        </div>
+        <div class="w-item reveal">
+          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Summit Event" loading="lazy">
+          <div class="w-label"><h4>Leaders Summit 2025</h4><p>Events · Experience</p></div>
+        </div>
+        <div class="w-item reveal">
+          <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Social Campaign" loading="lazy">
+          <div class="w-label"><h4>Viral Social Campaign</h4><p>Campaign · Content</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="testimonials">
+      <h2 class="title reveal">What Clients <span>Say</span></h2>
+      <div class="t-grid">
+          </div>
+        </div>
+        <div class="t-card reveal">
+          <div class="t-stars">★★★★★</div>
+          <p class="t-text">"The partnerships they facilitated opened three completely new markets for us. These people are genuinely connected at the highest level."</p>
+          <div class="t-author">
+            <img class="t-avatar" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&q=80" alt="Sara M.">
+            <div class="t-info"><strong>Sara Mansour</strong><span>COO, Bloom Ventures</span></div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OUR CLIENTS -->
+    <section id="our-clients">
+      <div class="clients-eyebrow reveal">🏆 Trusted By</div>
+      <h2 class="title reveal">Our <span>Clients</span></h2>
+      <p class="clients-sub reveal">We don't just take on clients — we take on their goals. Here's who trusted Vyro to build, grow, and dominate their market.</p>
+
+      <div class="clients-grid">
+        <div class="client-card reveal">
+          <div class="client-logo-wrap">
+            <img src="images/qurbly-logo.png" alt="Qurbly">
+          </div>
+          <div class="client-name">Qurbly</div>
+          <div class="client-tagline">"معاك في كل مكان"</div>
+          <div class="client-results">
+            <div class="result-badge"><span class="result-icon">🚀</span><div class="result-text"><strong>Massive Growth</strong><span>Brand awareness & reach</span></div></div>
+            <div class="result-badge"><span class="result-icon">📣</span><div class="result-text"><strong>Campaign Launched</strong><span>Multi-channel execution</span></div></div>
+            <div class="result-badge"><span class="result-icon">⚡</span><div class="result-text"><strong>5 Weeks Only</strong><span>From zero to results</span></div></div>
           </div>
         </div>
       </div>
 
-      <!-- COO: Shahd Shebrawy -->
-      <div class="team-member" id="tm-coo">
-        <div class="tm-img-wrap">
-          <img src="images/team-shahd.png" alt="Shahd Shebrawy — COO">
-          <div class="tm-badge">COO</div>
-        </div>
-        <div class="tm-body">
-          <div class="tm-name">Shahd Shebrawy</div>
-          <div class="tm-role">Chief Operating Officer</div>
-          <div class="tm-divider"></div>
-          <p class="tm-desc">The engine that keeps Vyro running at full speed. Shahd oversees day-to-day operations, client delivery, and team coordination. She ensures every project is executed with precision, on time, and beyond expectations — turning strategy into seamless, measurable outcomes for every client Vyro serves.</p>
-          <div class="tm-skills">
-            <span class="tm-skill">Operations</span>
-            <span class="tm-skill">Client Delivery</span>
-            <span class="tm-skill">Project Management</span>
-            <span class="tm-skill">Team Leadership</span>
+      <div class="clients-timeline reveal">
+        <div class="tl-step"><div class="tl-dot active">1</div><div class="tl-label">Discovery<small>Week 1</small></div></div>
+        <div class="tl-step"><div class="tl-dot active">2</div><div class="tl-label">Strategy<small>Week 2</small></div></div>
+        <div class="tl-step"><div class="tl-dot active">3</div><div class="tl-label">Execution<small>Week 3</small></div></div>
+        <div class="tl-step"><div class="tl-dot active">4</div><div class="tl-label">Optimization<small>Week 4</small></div></div>
+        <div class="tl-step"><div class="tl-dot active">5</div><div class="tl-label">Big Results<small>Week 5 ✓</small></div></div>
+      </div>
+
+      <div class="clients-headline reveal">
+        <h3>We Achieved <span>Big Results</span> in Just 5 Weeks</h3>
+        <p>Speed is our competitive advantage. We move fast, execute with precision, and deliver outcomes that matter — before most agencies finish their first presentation.</p>
+      </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section id="team">
+      <div class="team-hero-wrap reveal" onclick="openTeamModal()">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=85" alt="Vyro Team">
+        <div class="team-hero-overlay"></div>
+        <div class="team-hero-content">
+          <div class="team-section-eyebrow"><span class="hint-dot"></span> The People Behind The Brand</div>
+          <h2>Meet <span>Our Team</span></h2>
+          <p>Three driven leaders united by one mission — to build brands that dominate markets and change industries across Egypt and beyond.</p>
+          <div class="team-click-hint">
+            <span class="hint-dot"></span> Click to Meet the Team
+          </div>
+          <!-- avatar preview strip -->
+          <div class="team-preview-strip">
+            <div class="preview-avatar"><img src="images/team-mustafa-m.png" alt="CEO"></div>
+            <div class="preview-avatar"><img src="images/team-shahd.png"     alt="COO"></div>
+            <div class="preview-avatar"><img src="images/team-mustafa-h.jpeg" alt="CFO"></div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- CFO: Mustafa Hasanin -->
-      <div class="team-member" id="tm-cfo">
-        <div class="tm-img-wrap">
-          <img src="images/team-mustafa-h.png" alt="Mustafa Hasanin — CFO">
-          <div class="tm-badge">CFO</div>
-        </div>
-        <div class="tm-body">
-          <div class="tm-name">Mustafa Hasanin</div>
-          <div class="tm-role">Chief Financial Officer</div>
-          <div class="tm-divider"></div>
-          <p class="tm-desc">The financial backbone of Vyro. Mustafa manages the agency's financial strategy, resource allocation, and investment decisions. He ensures that every dollar spent generates maximum impact — building a financially strong and scalable agency that delivers real value to clients and stakeholders alike.</p>
-          <div class="tm-skills">
-            <span class="tm-skill">Financial Strategy</span>
-            <span class="tm-skill">Resource Planning</span>
-            <span class="tm-skill">Investment</span>
-            <span class="tm-skill">Risk Management</span>
-          </div>
-        </div>
+    <!-- CTA -->
+    <section class="cta-band">
+      <h2 class="reveal">Ready to <span style="color:var(--gold);">Dominate?</span></h2>
+      <p class="reveal">Let's build your brand's next chapter — from Egypt to the world.</p>
+      <button class="btn reveal" onclick="openPopup()">Get Started Today</button>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="footer-contact" id="contact">
+      <h2>Contact Vyro</h2>
+      <p class="sub">Based in Cairo, Egypt · 2026 · Ready to build with you</p>
+      <input type="text" id="footer-name" placeholder="Your Name">
+      <input type="email" id="footer-email" placeholder="Your Email">
+      <br>
+      <button onclick="sendFooterMail()">Send Message</button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <div class="f-logo">VYRO</div>
+        <p class="f-desc">Egypt's premier brand-growth agency — strategy, campaigns, events, and partnerships built for the world stage.</p>
       </div>
-
+      <div class="f-col">
+        <h5>Services</h5>
+        <a href="#services">Brand Positioning</a>
+        <a href="#services">Business Development</a>
+        <a href="#services">Campaigns</a>
+        <a href="#services">Events</a>
+        <a href="#partnerships">Partnerships</a>
+      </div>
+      <div class="f-col">
+        <h5>Company</h5>
+        <a href="#story">Our Story</a>
+        <a href="#work">Work</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </footer>
+    <div class="f-bottom">
+      <span>© 2026 Vyro Agency —  Egypt. All rights reserved.</span>
+      <span>egypt</span>
     </div>
-  </div>
-</div>
 
-<audio id="sound" src="https://assets.mixkit.co/sfx/preview/mixkit-quick-win-video-game-notification-269.mp3"></audio>
+    <!-- POPUP -->
+    <div class="popup" id="popup">
+      <div class="popup-box">
+        <h3>Let's Talk</h3>
+        <input type="text" id="name" placeholder="Your Name">
+        <input type="email" id="email" placeholder="Your Email">
+        <button onclick="submitForm()">Send Message</button>
+      </div>
+    </div>
 
-<script>
-/* SERVICE DATA */
-const SVC = {
-  brand:{
-    tag:'Strategy', title:'Brand Positioning',
-    img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80',
-    desc:'Brand positioning is the art and science of owning a distinct, powerful place in your customers\' minds. We analyze your market, audience, competitors, and culture to craft a positioning that is not just unique — but undeniable. Every touchpoint, message, and visual becomes a weapon for dominance.',
-    benefits:[
-      'Crystal-clear brand identity that differentiates you instantly in any room',
-      'Higher perceived value — customers pay more for confidently positioned brands',
-      'Consistent messaging across every channel, team member, and campaign',
-      'Faster sales cycles because buyers already trust you before they meet you',
-      'Long-term brand equity that compounds over time like a high-return asset'
-    ],
-    steps:[
-      {t:'Discovery Sprint', d:'We deep-dive into your business, audience, competitors, and ambitions through strategic workshops and market research.'},
-      {t:'Positioning Audit', d:'We map where you currently sit in the market and identify the white space you can own — exclusively.'},
-      {t:'Identity Architecture', d:'We build your brand pillars, voice, tone, messaging hierarchy, and visual direction into a single coherent system.'},
-      {t:'Rollout Playbook', d:'You receive a complete brand guide and implementation roadmap your entire team can execute from day one.'}
-    ]
-  },
-  bizdev:{
-    tag:'Growth', title:'Business Development',
-    img:'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=80',
-    desc:'Business development at Vyro means building the systems, relationships, and frameworks that create sustainable revenue growth. We go beyond short-term tactics — we architect long-term pipelines, strategic alliances, and market expansion plays that compound value over time.',
-    benefits:[
-      'New revenue streams you hadn\'t considered or couldn\'t access alone',
-      'Qualified partnerships with companies that directly accelerate your growth',
-      'Structured BD frameworks your team can scale independently after us',
-      'Reduced dependency on a single market, product, or client segment',
-      'Access to our regional network across Egypt, Gulf, Europe, and beyond'
-    ],
-    steps:[
-      {t:'Opportunity Mapping', d:'We identify the highest-leverage growth opportunities specific to your sector, stage, and market position.'},
-      {t:'Outreach & Relationship Building', d:'We approach and warm up strategic partners, clients, or investors on your behalf with credibility.'},
-      {t:'Deal Structuring', d:'We help design partnership agreements, revenue sharing models, and co-venture frameworks that protect you.'},
-      {t:'Pipeline Handover', d:'We deliver a qualified, active pipeline with the systems and playbooks to keep it growing after us.'}
-    ]
-  },
-  campaigns:{
-    tag:'Marketing', title:'Campaigns',
-    img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=80',
-    desc:'Vyro campaigns are built at the intersection of data precision and cultural storytelling. We don\'t run generic ads — we engineer moments. Each campaign is designed with a clear objective, a compelling narrative, and measurable KPIs that tie directly to business outcomes, not vanity metrics.',
-    benefits:[
-      'Measurable ROI with clear attribution from every campaign dollar spent',
-      'Audience growth across social, digital, influencer, and traditional channels',
-      'Brand awareness that translates into actual leads and real revenue',
-      'Creative assets that outlive the campaign and build long-term brand equity',
-      'Real-time optimization so your budget always performs at its absolute peak'
-    ],
-    steps:[
-      {t:'Objective Setting', d:'We align on the exact business outcome — not just vanity metrics — and build the entire campaign around it.'},
-      {t:'Creative Development', d:'Our team develops the campaign concept, visual assets, copy, and full content calendar.'},
-      {t:'Multi-Channel Launch', d:'We execute across the right channels: social, digital, influencer, PR, and live events.'},
-      {t:'Reporting & Optimization', d:'Weekly performance dashboards and live optimization ensure maximum impact throughout the full campaign.'}
-    ]
-  },
-  events:{
-    tag:'Experience', title:'Events',
-    img:'https://images.unsplash.com/photo-1531058020387-3be344556be6?w=900&q=80',
-    desc:'Events are the most powerful brand touchpoint in existence — when done right. Vyro designs and produces experiences that don\'t just fill a room; they create memories, spark relationships, and position your brand as a category leader. From intimate boardroom dinners to large-scale city activations.',
-    benefits:[
-      'Direct access to high-value clients, partners, and media all in one room',
-      'Brand positioning as a market leader and trusted thought-authority',
-      'Content and PR generated from a single event that resonates for months',
-      'Deeper client loyalty through shared, genuinely memorable experiences',
-      'Networking outcomes that turn into real business deals and partnerships'
-    ],
-    steps:[
-      {t:'Concept & Strategy', d:'We design the event concept, objectives, target audience, format, and success metrics before anything is booked.'},
-      {t:'Production Planning', d:'Venue, vendors, logistics, speakers, and all moving parts are managed end-to-end by our production team.'},
-      {t:'On-Ground Execution', d:'Our team is present from setup through breakdown — ensuring every detail delivers a flawless experience.'},
-      {t:'Post-Event Amplification', d:'We produce recap content, follow-up outreach, and targeted PR to extend the event\'s impact for months.'}
-    ]
-  }
-};
+    <!-- SUCCESS -->
+    <div class="success" id="success">
+      <div class="success-box">
+        <h2>Thank You!</h2>
+        <p id="success-text"></p>
+      </div>
+    </div>
 
-/* MODAL */
-function openModal(key) {
-  const s = SVC[key]; if(!s) return;
-  document.getElementById('mImg').src = s.img;
-  document.getElementById('mTag').textContent = s.tag;
-  document.getElementById('mTitle').textContent = s.title;
-  document.getElementById('mDesc').textContent = s.desc;
-  const bl = document.getElementById('mBenefits');
-  bl.innerHTML = '';
-  s.benefits.forEach(b => { const li = document.createElement('li'); li.textContent = b; bl.appendChild(li); });
-  const pr = document.getElementById('mProcess');
-  pr.innerHTML = '';
-  s.steps.forEach((st,i) => {
-    pr.innerHTML += `<div class="m-step"><div class="step-n">${String(i+1).padStart(2,'0')}</div><div class="step-t"><strong>${st.t}</strong><span>${st.d}</span></div></div>`;
-  });
-  const mb = document.getElementById('modalBox');
-  mb.scrollTop = 0;
-  document.getElementById('svcModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  gsap.fromTo(mb, {scale:.84,y:36,opacity:0}, {scale:1,y:0,opacity:1,duration:.45,ease:'back.out(1.6)'});
-}
-function closeModal() {
-  const modal = document.getElementById('svcModal');
-  const mb = document.getElementById('modalBox');
-  gsap.to(mb, {scale:.88,y:28,opacity:0,duration:.22,ease:'power2.in', onComplete:()=>{
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }});
-}
-function handleModalBg(e) { if(e.target===document.getElementById('svcModal')) closeModal(); }
+    <!-- SERVICE MODAL -->
+    <div class="modal-bg" id="svcModal" onclick="handleModalBg(event)">
+      <div class="modal-box" id="modalBox">
+        <button class="m-close" onclick="closeModal()">✕</button>
+        <img class="m-img" id="mImg" src="" alt="">
+        <div class="m-body">
+          <span class="m-tag" id="mTag"></span>
+          <h2 id="mTitle"></h2>
+          <div class="m-sec"><h4>What It Is</h4><p id="mDesc"></p></div>
+          <div class="m-sec"><h4>Benefits You Get</h4><ul class="m-benefits" id="mBenefits"></ul></div>
+          <div class="m-sec"><h4>How We Work</h4><div class="m-process" id="mProcess"></div></div>
+          <button class="m-cta-btn" onclick="closeModal();openPopup();">Start This Service →</button>
+        </div>
+      </div>
+    </div>
 
-/* THEME */
-document.getElementById('themeBtn').addEventListener('click', () => {
-  const html = document.documentElement;
-  const dark = html.getAttribute('data-theme')==='dark';
-  html.setAttribute('data-theme', dark ? 'light' : 'dark');
-  gsap.fromTo('body',{opacity:.75},{opacity:1,duration:.45});
-});
+    <!-- TEAM MODAL -->
+    <div class="team-modal-bg" id="teamModal" onclick="handleTeamBg(event)">
+      <div class="team-modal-box" id="teamModalBox">
+        <button class="team-modal-close" onclick="closeTeamModal()">✕</button>
 
-/* EMAILJS */
-(function(){ emailjs.init("WjsH8c_qGFq5VMI-S"); })();
+        <div class="team-modal-header">
+          <div class="tm-eyebrow">⚡ The People Behind Vyro</div>
+          <h2>Meet <span>Our Team</span></h2>
+          <p>Three driven individuals united by one mission — to build brands that dominate markets and change industries.</p>
+        </div>
 
-/* CURSOR */
-const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  gsap.to(cursor,{left:e.clientX,top:e.clientY,duration:.09,ease:'none'});
-});
-document.querySelectorAll('a,button,.service-card,.p-card,.w-item,.t-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
-});
+        <div class="team-grid">
 
-/* POPUP */
-function openPopup(){ document.getElementById('popup').style.display='flex'; gsap.fromTo('.popup-box',{scale:.8,opacity:0},{scale:1,opacity:1,duration:.38,ease:'back.out(1.5)'}); }
-document.getElementById('popup').addEventListener('click',function(e){ if(e.target===this) gsap.to('.popup-box',{scale:.88,opacity:0,duration:.2,onComplete:()=>this.style.display='none'}); });
+          <!-- CEO: Mustafa Mohamed -->
+          <div class="team-member" id="tm-ceo">
+            <div class="tm-img-wrap">
+              <img src="images/team-mustafa-m.png" alt="Mustafa Mohamed — CEO">
+              <div class="tm-badge">CEO</div>
+            </div>
+            <div class="tm-body">
+              <div class="tm-name">Mustafa Mohamed</div>
+              <div class="tm-role">Chief Executive Officer</div>
+              <div class="tm-divider"></div>
+              <p class="tm-desc">The visionary force behind Vyro. Mustafa leads the agency's overall direction, client strategy, and growth architecture. With a sharp eye for market opportunity and a relentless drive for results, he transforms ambitious ideas into executed realities — building brands that don't just compete, they dominate.</p>
+              <div class="tm-skills">
+                <span class="tm-skill">Brand Strategy</span>
+                <span class="tm-skill">Growth Architecture</span>
+                <span class="tm-skill">Leadership</span>
+                <span class="tm-skill">Market Expansion</span>
+              </div>
+            </div>
+          </div>
 
-/* FORMS */
-function submitForm(){
-  let name=document.getElementById('name').value, email=document.getElementById('email').value;
-  if(!name||!email){alert('Please fill all fields');return;}
-  emailjs.send('service_9kgrgqf','template_mi1jnsn',{name,email}).then(r=>console.log('OK',r)).catch(e=>console.log('ERR',e));
-  gsap.to('.popup-box',{scale:.88,opacity:0,duration:.2,onComplete:()=>{ document.getElementById('popup').style.display='none'; }});
-  showSuccess(name);
-}
-function sendFooterMail(){
-  let name=document.getElementById('footer-name').value, email=document.getElementById('footer-email').value;
-  if(!name||!email){alert('Please fill all fields');return;}
-  emailjs.send('service_9kgrgqf','template_mi1jnsn',{name,email}).then(r=>console.log('OK',r)).catch(e=>console.log('ERR',e));
-  showSuccess(name);
-}
-function showSuccess(name){
-  document.getElementById('success-text').innerHTML=`We received your request, <b>${name}</b> — we'll be in touch within 24 hours.`;
-  document.getElementById('sound').play();
-  let tl=gsap.timeline();
-  tl.to('#success',{opacity:1,visibility:'visible',duration:.3})
-    .to('.success-box',{scale:1,duration:.5})
-    .to('.success-box',{scale:.95,duration:.3,delay:2})
-    .to('#success',{opacity:0,visibility:'hidden',duration:.3});
-}
+          <!-- COO: Shahd Shebrawy -->
+          <div class="team-member" id="tm-coo">
+            <div class="tm-img-wrap">
+              <img src="images/team-shahd.png" alt="Shahd Shebrawy — COO">
+              <div class="tm-badge">COO</div>
+            </div>
+            <div class="tm-body">
+              <div class="tm-name">Shahd Shebrawy</div>
+              <div class="tm-role">Chief Operating Officer</div>
+              <div class="tm-divider"></div>
+              <p class="tm-desc">The engine that keeps Vyro running at full speed. Shahd oversees day-to-day operations, client delivery, and team coordination. She ensures every project is executed with precision, on time, and beyond expectations — turning strategy into seamless, measurable outcomes for every client Vyro serves.</p>
+              <div class="tm-skills">
+                <span class="tm-skill">Operations</span>
+                <span class="tm-skill">Client Delivery</span>
+                <span class="tm-skill">Project Management</span>
+                <span class="tm-skill">Team Leadership</span>
+              </div>
+            </div>
+          </div>
 
-/* GSAP ANIMATIONS */
-gsap.registerPlugin(ScrollTrigger);
+          <!-- CFO: Mustafa Hasanin -->
+          <div class="team-member" id="tm-cfo">
+            <div class="tm-img-wrap">
+              <img src="images/team-mustafa-h.png" alt="Mustafa Hasanin — CFO">
+              <div class="tm-badge">CFO</div>
+            </div>
+            <div class="tm-body">
+              <div class="tm-name">Mustafa Hasanin</div>
+              <div class="tm-role">Chief Financial Officer</div>
+              <div class="tm-divider"></div>
+              <p class="tm-desc">The financial backbone of Vyro. Mustafa manages the agency's financial strategy, resource allocation, and investment decisions. He ensures that every dollar spent generates maximum impact — building a financially strong and scalable agency that delivers real value to clients and stakeholders alike.</p>
+              <div class="tm-skills">
+                <span class="tm-skill">Financial Strategy</span>
+                <span class="tm-skill">Resource Planning</span>
+                <span class="tm-skill">Investment</span>
+                <span class="tm-skill">Risk Management</span>
+              </div>
+            </div>
+          </div>
 
-// Hero entrance
-gsap.timeline()
-  .fromTo('.hero-eyebrow',{opacity:0,y:20},{opacity:1,y:0,duration:.7,ease:'power3.out'},.4)
-  .fromTo('.hero-text h1',{opacity:0,y:44},{opacity:1,y:0,duration:.9,ease:'power3.out'},.6)
-  .fromTo('.hero-sub',{opacity:0,y:28},{opacity:1,y:0,duration:.7,ease:'power3.out'},.85)
-  .fromTo('.hero .btn',{opacity:0,y:20},{opacity:1,y:0,duration:.6,ease:'power3.out'},1.05)
-  .fromTo('.hero-badge-img',{opacity:0,x:55,scale:.9},{opacity:1,x:0,scale:1,duration:.9,ease:'back.out(1.3)'},.75);
+        </div>
+      </div>
+    </div>
 
-// Parallax hero
-gsap.to('.hero video',{yPercent:22,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+    <audio id="sound" src="https://assets.mixkit.co/sfx/preview/mixkit-quick-win-video-game-notification-269.mp3"></audio>
 
-// Scroll reveals
-document.querySelectorAll('.reveal').forEach((el,i)=>{
-  gsap.fromTo(el,{opacity:0,y:50},{opacity:1,y:0,duration:.72,ease:'power3.out',delay:(i%4)*.055,
-    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none none'}});
-});
-document.querySelectorAll('.rev-left').forEach(el=>{
-  gsap.fromTo(el,{opacity:0,x:-55},{opacity:1,x:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 86%'}});
-});
-
-// Grid staggers
-gsap.fromTo('.service-card',{opacity:0,y:55,scale:.95},{opacity:1,y:0,scale:1,duration:.68,ease:'power3.out',stagger:.1,scrollTrigger:{trigger:'.services-grid',start:'top 85%'}});
-gsap.fromTo('.p-card',{opacity:0,y:48},{opacity:1,y:0,duration:.65,ease:'power3.out',stagger:.1,scrollTrigger:{trigger:'.p-grid',start:'top 85%'}});
-gsap.fromTo('.w-item',{opacity:0,scale:.9},{opacity:1,scale:1,duration:.6,ease:'power3.out',stagger:.09,scrollTrigger:{trigger:'.w-grid',start:'top 85%'}});
-gsap.fromTo('.t-card',{opacity:0,y:38},{opacity:1,y:0,duration:.6,ease:'power3.out',stagger:.11,scrollTrigger:{trigger:'.t-grid',start:'top 85%'}});
-
-// CTA
-gsap.fromTo('.cta-band h2',{opacity:0,y:38,letterSpacing:'8px'},{opacity:1,y:0,letterSpacing:'0px',duration:.95,ease:'power3.out',scrollTrigger:{trigger:'.cta-band',start:'top 80%'}});
-
-// Collab strip
-gsap.fromTo('.collab-strip',{opacity:0,scale:.95},{opacity:1,scale:1,duration:.7,ease:'back.out(1.3)',scrollTrigger:{trigger:'.collab-strip',start:'top 85%'}});
-
-// Team section entrance
-gsap.fromTo('.team-hero-wrap',
-  {opacity:0, scale:.96},
-  {opacity:1, scale:1, duration:.9, ease:'power3.out',
-   scrollTrigger:{trigger:'#team', start:'top 85%'}}
-);
-gsap.fromTo('.preview-avatar',
-  {opacity:0, y:30, scale:.8},
-  {opacity:1, y:0, scale:1, duration:.5, ease:'back.out(1.8)', stagger:.1,
-   scrollTrigger:{trigger:'#team', start:'top 75%'}, delay:.3}
-);
-
-// Nav
-gsap.fromTo('nav a',{opacity:0,y:-10},{opacity:1,y:0,stagger:.06,duration:.45,delay:.3});
-
-/* ===== TEAM MODAL ===== */
-function openTeamModal(){
-  const modal = document.getElementById('teamModal');
-  const box   = document.getElementById('teamModalBox');
-  box.scrollTop = 0;
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-
-  // stagger each member card in
-  gsap.fromTo(box,
-    {scale:.88, y:36, opacity:0},
-    {scale:1, y:0, opacity:1, duration:.45, ease:'back.out(1.6)'}
-  );
-  gsap.fromTo('.team-member',
-    {opacity:0, y:60, scale:.92},
-    {opacity:1, y:0, scale:1, duration:.65, ease:'back.out(1.4)', stagger:.12, delay:.2}
-  );
-  // subtle gold glow pulse on each badge
-  gsap.fromTo('.tm-badge',
-    {scale:.7, opacity:0},
-    {scale:1, opacity:1, duration:.4, ease:'back.out(2)', stagger:.12, delay:.35}
-  );
-}
-
-function closeTeamModal(){
-  const modal = document.getElementById('teamModal');
-  const box   = document.getElementById('teamModalBox');
-  gsap.to(box, {scale:.9, y:28, opacity:0, duration:.25, ease:'power2.in', onComplete:()=>{
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }});
-}
-
-function handleTeamBg(e){
-  if(e.target === document.getElementById('teamModal')) closeTeamModal();
-}
-
-// cursor hover on team members
-document.querySelectorAll('.team-member').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cursor.classList.add('big'));
-  el.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
-});
-document.querySelector('.hero-badge-img')?.addEventListener('mouseenter',()=>cursor.classList.add('big'));
-document.querySelector('.hero-badge-img')?.addEventListener('mouseleave',()=>cursor.classList.remove('big'));
-</script>
-</body>
+    <script src="scripts/script.js"></script>
+  </body>
 </html>
